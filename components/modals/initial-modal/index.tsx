@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import FileUpload from '@/components/file-upload'
 
 type TCreateServer = z.infer<typeof createServerSchema>
 
@@ -63,8 +64,22 @@ const InitialModal = () => {
           </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-              <div className='flex items-center justify-center text-center'>
-                TODO: Image Upload
+              <div className='flex items-center justify-center text-center pt-3'>
+                <FormField
+                  control={form.control}
+                  name='imageUrl'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint='serverImage'
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className='px-6'>
