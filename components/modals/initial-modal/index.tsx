@@ -1,6 +1,7 @@
 'use client'
 
 import * as z from 'zod'
+import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useEffect, useState } from 'react'
@@ -24,6 +25,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import FileUpload from '@/components/file-upload'
+import { useRouter } from 'next/navigation'
 
 type TCreateServer = z.infer<typeof createServerSchema>
 
@@ -35,8 +37,9 @@ const InitialModal = () => {
     },
     resolver: zodResolver(createServerSchema)
   })
-  const [isMounted, setIsMounted] = useState(false)
 
+  const router = useRouter()
+  const [isMounted, setIsMounted] = useState(false)
   const isLoading = form.formState.isSubmitting
 
   useEffect(() => {
@@ -44,7 +47,14 @@ const InitialModal = () => {
   }, [])
 
   const onSubmit = async (values: TCreateServer) => {
-    console.log(values, 'values submitted.')
+    try {
+      const res = await axios.post('/api/servers/create', values)
+      form.reset()
+      router.refresh()
+      window.location.reload()
+    } catch (error) {
+      console.log(error, 'create server failed.')
+    }
   }
 
   if (!isMounted) {
