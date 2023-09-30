@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { initialProfile } from '@/lib/initialProfile'
 import InitialModal from '@/components/modals/initial-modal'
 
-const SetupPage = async () => {
+const HomePage = async () => {
   const profile = await initialProfile()
 
   const foundServer = await db.server.findFirst({
@@ -23,4 +23,4 @@ const SetupPage = async () => {
   return <InitialModal />
 }
 
-export default SetupPage
+export default HomePage
