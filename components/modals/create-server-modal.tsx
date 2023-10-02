@@ -4,7 +4,6 @@ import * as z from 'zod'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useEffect, useState } from 'react'
 import { createServerSchema } from '@/lib/zodSchema'
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -20,52 +19,51 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import FileUpload from '@/components/file-upload'
 import { useRouter } from 'next/navigation'
+import { ModalType, useModal } from '@/hooks/useModal'
 
 type TCreateServer = z.infer<typeof createServerSchema>
 
-const InitialModal = () => {
+const CreateServerModal = () => {
+  const router = useRouter()
+  const { isOpen, type, onClose } = useModal()
   const form = useForm<TCreateServer>({
     defaultValues: {
       name: '',
-      imageUrl: ''
+      imageUrl: '',
     },
-    resolver: zodResolver(createServerSchema)
+    resolver: zodResolver(createServerSchema),
   })
 
-  const router = useRouter()
-  const [isMounted, setIsMounted] = useState(false)
   const isLoading = form.formState.isSubmitting
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const isModalOpen = isOpen && type === ModalType.CREATE_SERVER
 
   const onSubmit = async (values: TCreateServer) => {
     try {
-      const res = await axios.post('/api/servers/create', values)
+      await axios.post('/api/servers/create', values)
       form.reset()
       router.refresh()
-      window.location.reload()
+      onClose()
     } catch (error) {
       console.log(error, 'create server failed.')
     }
   }
 
-  if (!isMounted) {
-    return null
+  const handleClose = () => {
+    form.reset()
+    onClose()
   }
 
   return (
-    <Dialog open>
-      <DialogContent className='bg-white text-black p-0 overflow-hidden rounded-md shadow-md'>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
+      <DialogContent className='overflow-hidden rounded-md bg-white p-0 text-black shadow-md'>
         <DialogHeader className='pt-8'>
-          <DialogTitle className='text-2xl text-center font-bold'>
+          <DialogTitle className='text-center text-2xl font-bold'>
             Customize your server
           </DialogTitle>
           <DialogDescription className='text-center text-zinc-600'>
@@ -74,7 +72,7 @@ const InitialModal = () => {
           </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-              <div className='flex items-center justify-center text-center pt-3'>
+              <div className='flex items-center justify-center pt-3 text-center'>
                 <FormField
                   control={form.control}
                   name='imageUrl'
@@ -98,13 +96,13 @@ const InitialModal = () => {
                   name='name'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'>
+                      <FormLabel className='text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70'>
                         Server name
                       </FormLabel>
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className='bg-zinc-300/50 border-0 outline-none focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                          className='border-0 bg-zinc-300/50 text-black outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
                           placeholder='Enter server name...'
                           {...field}
                         />
@@ -127,4 +125,4 @@ const InitialModal = () => {
   )
 }
 
-export default InitialModal
+export default CreateServerModal
