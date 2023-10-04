@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import FileUpload from '@/components/file-upload'
 import { useRouter } from 'next/navigation'
-import { ModalType, useModal } from '@/hooks/useModal'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
 
 type TCreateServer = z.infer<typeof createServerSchema>
 

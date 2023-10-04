@@ -43,7 +43,7 @@ const NavigationItem = ({ id, name, imageUrl }: Props) => {
                 'rounded-[16px] bg-primary/10 text-primary'
             )}
           >
-            <Image alt='Channel' src={imageUrl} fill />
+            <Image alt='Channel' src={imageUrl} fill sizes='null' />
           </div>
         </button>
       }
