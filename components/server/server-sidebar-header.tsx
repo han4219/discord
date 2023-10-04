@@ -93,8 +93,7 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
               <Trash2 className='ml-auto h-4 w-4' />
             </DropdownMenuItem>
           )}
-          {isModerator && <DropdownMenuSeparator />}
-          {isAdmin && (
+          {!isAdmin && (
             <DropdownMenuItem
               className={`${dropdownItemClassName} text-red-600 dark:text-red-400 dark:hover:bg-red-600`}
             >

@@ -1,29 +1,59 @@
 'use client'
 
+import axios from 'axios'
+import { useState } from 'react'
+import { Check, Copy, RefreshCcw } from 'lucide-react'
+
+import useOriginLink from '@/hooks/user-origin-link'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
+
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogTitle,
   DialogHeader,
   DialogContent,
 } from '@/components/ui/dialog'
-
-import { ModalType, useModal } from '@/hooks/use-modal-store'
-
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Copy, RefreshCcw } from 'lucide-react'
-import useOriginLink from '@/hooks/user-origin-link'
+import { cn } from '@/lib/utils'
 
 const InviteMemberModal = () => {
   const originLink = useOriginLink()
-  const { isOpen, type, onClose, data } = useModal()
+  const { isOpen, type, onClose, data, onOpen } = useModal()
+
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
 
   const isModalOpen = isOpen && type === ModalType.INVITE_MEMBER
   const inviteLink = `${originLink}/invite/${data.server?.inviteCode}`
 
   const handleClose = () => {
     onClose()
+  }
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(inviteLink)
+    setIsCopied(true)
+
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 1000)
+  }
+
+  const handleRefreshLink = async () => {
+    try {
+      setIsGenerating(true)
+      const res = await axios.patch(
+        `/api/servers/${data.server?.id}/generate-invite-code`
+      )
+      onOpen(ModalType.INVITE_MEMBER, { server: res.data })
+    } catch (error) {
+      console.log(error, 'failed to generate new link')
+      alert('Failed to generate new link: ')
+    } finally {
+      setIsGenerating(false)
+    }
   }
 
   return (
@@ -40,28 +70,39 @@ const InviteMemberModal = () => {
           </Label>
           <div className='mt-2 flex items-center gap-2'>
             <Input
+              readOnly
+              disabled={isGenerating}
               className='border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0'
               value={inviteLink}
             />
-            <Button size='icon'>
-              <Copy className='h-4 w-4' />
+            <Button
+              onClick={handleCopyLink}
+              disabled={isGenerating}
+              size='icon'
+            >
+              {isCopied ? (
+                <Check className='h-4 w-4' />
+              ) : (
+                <Copy className='h-4 w-4' />
+              )}
             </Button>
           </div>
           <Button
+            disabled={isGenerating}
             size='sm'
             className='mt-4 text-sm text-zinc-500'
             variant='link'
+            onClick={handleRefreshLink}
           >
             Generate a new link
-            <RefreshCcw className='ml-2 h-4 w-4' />
+            <RefreshCcw
+              className={cn('ml-2 h-4 w-4', isGenerating && 'animate-spin')}
+            />
           </Button>
         </div>
       </DialogContent>
     </Dialog>
   )
 }
-
-//TODO: write api to generate new link
-// create page to handle accept invite link when user enter and access that link
 
 export default InviteMemberModal
