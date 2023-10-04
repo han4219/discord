@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { ChannelType } from '@prisma/client'
 import { currentProfile } from '@/lib/currentProfile'
 
-import ServerSidebarHeader from '@/components/server/server-sidebar-header'
+import ServerSidebarHeader from '@/components/sidebar/server/server-sidebar-header'
 
 interface Props {
   serverId: string

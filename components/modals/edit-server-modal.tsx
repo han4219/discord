@@ -80,8 +80,8 @@ const EditServerModal = () => {
             Edit your server
           </DialogTitle>
           <DialogDescription className='text-center text-zinc-600'>
-            Give your server a personality with a name and an image. You can
-            always change it later.
+            Edit your server with name and an image. You can always change it
+            later.
           </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>

@@ -1,13 +1,14 @@
 import React from 'react'
-import { currentProfile } from '@/lib/currentProfile'
-import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import NavigationAction from '@/components/navigation/navigation-sidebar/navigation-action'
+import { currentProfile } from '@/lib/currentProfile'
+import { UserButton } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
+
+import { ModeToggle } from '@/components/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import NavigationItem from '@/components/navigation/navigation-sidebar/navigation-item'
-import { UserButton } from '@clerk/nextjs'
-import { ModeToggle } from '@/components/mode-toggle'
+import NavigationItem from '@/components/sidebar/navigation/navigation-item'
+import NavigationAction from '@/components/sidebar/navigation/navigation-action'
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile()

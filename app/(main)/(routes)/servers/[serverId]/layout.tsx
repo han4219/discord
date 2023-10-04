@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { redirectToSignIn } from '@clerk/nextjs'
 import { currentProfile } from '@/lib/currentProfile'
 
-import ServerSidebar from '@/components/server/server-sidebar'
+import ServerSidebar from '@/components/sidebar/server/server-sidebar'
 
 interface Props {
   children: React.ReactNode
