@@ -22,6 +22,7 @@ import {
   Users,
 } from 'lucide-react'
 import { useState } from 'react'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
 
 interface Props {
   server: TServerWithMembersAndProfiles
@@ -32,6 +33,7 @@ const dropdownItemClassName =
   'cursor-pointer px-3 py-2 text-sm dark:hover:bg-indigo-500 dark:hover:text-white'
 
 const ServerSidebarHeader = ({ server, role }: Props) => {
+  const { onOpen } = useModal()
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const isAdmin = role === MemberRole.ADMIN
   const isModerator = isAdmin || role === MemberRole.MODERATOR
@@ -43,7 +45,7 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
     >
       <DropdownMenuTrigger className='focus:outline-none' asChild>
         <button className='text-md flex h-12 w-full items-center border-b-2 border-neutral-200 px-3 font-semibold transition hover:bg-zinc-700/10 dark:border-neutral-800 dark:hover:bg-zinc-700/50 '>
-          {server.name}
+          <p className='line-clamp-1 max-w-[90%] text-left'>{server.name}</p>
           {isOpenDropdown ? (
             <ChevronUp className='ml-auto h-5 w-5' />
           ) : (
@@ -55,6 +57,7 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
         <DropdownMenuGroup>
           {isModerator && (
             <DropdownMenuItem
+              onClick={() => onOpen(ModalType.INVITE_MEMBER, { server })}
               className={`${dropdownItemClassName} text-indigo-600 dark:text-indigo-400`}
             >
               Invite People
