@@ -65,7 +65,10 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
             </DropdownMenuItem>
           )}
           {isAdmin && (
-            <DropdownMenuItem className={dropdownItemClassName}>
+            <DropdownMenuItem
+              onClick={() => onOpen(ModalType.EDIT_SERVER, { server })}
+              className={dropdownItemClassName}
+            >
               Server Settings
               <Settings className='ml-auto h-4 w-4' />
             </DropdownMenuItem>

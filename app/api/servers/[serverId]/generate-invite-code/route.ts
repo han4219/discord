@@ -4,7 +4,7 @@ import { currentProfile } from '@/lib/currentProfile'
 import { NextResponse } from 'next/server'
 
 export async function PATCH(
-  res: Request,
+  req: Request,
   { params }: { params: { serverId: string } }
 ) {
   const serverId = params.serverId
