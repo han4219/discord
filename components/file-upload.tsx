@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { UploadDropzone } from '@/lib/uploadthing'
-import '@uploadthing/react/styles.css'
 import Image from 'next/image'
 import { X } from 'lucide-react'
 

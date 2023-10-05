@@ -96,6 +96,7 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
         <DropdownMenuGroup>
           {isAdmin && (
             <DropdownMenuItem
+              onClick={() => onOpen(ModalType.DELETE_SERVER, { server })}
               className={`${dropdownItemClassName} text-red-600 dark:text-red-400 dark:hover:bg-red-600`}
             >
               Delete Server
@@ -104,6 +105,7 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
           )}
           {!isAdmin && (
             <DropdownMenuItem
+              onClick={() => onOpen(ModalType.LEAVE_SERVER, { server })}
               className={`${dropdownItemClassName} text-red-600 dark:text-red-400 dark:hover:bg-red-600`}
             >
               Leave Server

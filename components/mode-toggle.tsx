@@ -23,7 +23,7 @@ export function ModeToggle({ triggerClassName }: Props) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className={triggerClassName}>
         <Button
-          className='!border-0 bg-transparent'
+          className='border-0 focus-visible:ring-0 focus-visible:ring-offset-0'
           variant='outline'
           size='icon'
         >
