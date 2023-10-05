@@ -83,7 +83,10 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
             </DropdownMenuItem>
           )}
           {isModerator && (
-            <DropdownMenuItem className={dropdownItemClassName}>
+            <DropdownMenuItem
+              onClick={() => onOpen(ModalType.CREATE_CHANNEL, { server })}
+              className={dropdownItemClassName}
+            >
               Create Channels
               <PlusCircle className='ml-auto h-4 w-4' />
             </DropdownMenuItem>
