@@ -74,7 +74,10 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
             </DropdownMenuItem>
           )}
           {isAdmin && (
-            <DropdownMenuItem className={dropdownItemClassName}>
+            <DropdownMenuItem
+              onClick={() => onOpen(ModalType.MANAGE_MEMBERS, { server })}
+              className={dropdownItemClassName}
+            >
               Manager Members
               <Users className='ml-auto h-4 w-4' />
             </DropdownMenuItem>

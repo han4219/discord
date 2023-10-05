@@ -5,6 +5,7 @@ export enum ModalType {
   CREATE_SERVER = 'CREATE_SERVER',
   INVITE_MEMBER = 'INVITE_MEMBER',
   EDIT_SERVER = 'EDIT_SERVER',
+  MANAGE_MEMBERS = 'MANAGE_MEMBERS',
 }
 
 interface ModalStoreData {
