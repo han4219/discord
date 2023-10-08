@@ -30,13 +30,13 @@ const NavigationSidebar = async () => {
   return (
     <div className='flex h-full w-full flex-col items-center space-y-4 border-r py-3 text-primary shadow-sm dark:bg-[#1E1F22]'>
       <NavigationAction />
-      <Separator className='mx-auto h-[2px] w-8 rounded-xl bg-zinc-600 dark:bg-zinc-200' />
+      <Separator className='mx-auto h-[2px] w-8 rounded-xl bg-zinc-600 dark:bg-zinc-500' />
       <ScrollArea className='flex-1'>
         {servers.map(({ id, name, imageUrl }) => (
           <NavigationItem id={id} name={name} imageUrl={imageUrl} key={id} />
         ))}
       </ScrollArea>
-      <Separator className='mx-auto h-[2px] w-8 rounded-xl bg-zinc-600 dark:bg-zinc-200' />
+      <Separator className='mx-auto h-[2px] w-8 rounded-xl bg-zinc-600 dark:bg-zinc-500' />
       <div className='mt-auto flex flex-col items-center gap-y-4 pb-3'>
         <ModeToggle triggerClassName='w-12 h-12' />
         <UserButton

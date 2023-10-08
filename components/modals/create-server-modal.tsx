@@ -47,8 +47,8 @@ const CreateServerModal = () => {
     try {
       await axios.post('/api/servers/create', values)
       form.reset()
-      router.refresh()
       onClose()
+      router.refresh()
     } catch (error) {
       console.log(error, 'create server failed.')
     }

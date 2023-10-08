@@ -32,7 +32,7 @@ interface Props {
 const dropdownItemClassName =
   'cursor-pointer px-3 py-2 text-sm dark:hover:bg-indigo-500 dark:hover:text-white'
 
-const ServerSidebarHeader = ({ server, role }: Props) => {
+const ServerHeader = ({ server, role }: Props) => {
   const { onOpen } = useModal()
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const isAdmin = role === MemberRole.ADMIN
@@ -118,4 +118,4 @@ const ServerSidebarHeader = ({ server, role }: Props) => {
   )
 }
 
-export default ServerSidebarHeader
+export default ServerHeader
