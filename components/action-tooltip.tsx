@@ -7,7 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-// import { Arrow } from '@radix-ui/react-tooltip'
 
 interface Props {
   label: string
@@ -22,7 +21,6 @@ const ActionTooltip: React.FC<Props> = ({ label, children, side, align }) => {
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent align={align} side={side}>
-          {/* <Arrow className='transition' width={10} height={5} /> */}
           <p className='text-sm font-semibold capitalize'>
             {label.toLowerCase()}
           </p>

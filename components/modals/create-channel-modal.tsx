@@ -4,7 +4,7 @@ import * as z from 'zod'
 import axios from 'axios'
 import qs from 'query-string'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { ChannelType } from '@prisma/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createChannelSchema } from '@/lib/zodSchema'
@@ -34,19 +34,29 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useEffect } from 'react'
 
 type TCreateChannel = z.infer<typeof createChannelSchema>
 
 const CreateChannelModal = () => {
   const router = useRouter()
+  const params = useParams()
   const { isOpen, type, onClose, data } = useModal()
   const form = useForm<TCreateChannel>({
     defaultValues: {
       name: '',
-      type: ChannelType.TEXT,
+      type: data.channelType || ChannelType.TEXT,
     },
     resolver: zodResolver(createChannelSchema),
   })
+
+  useEffect(() => {
+    if (data.channelType) {
+      form.setValue('type', data.channelType)
+    } else {
+      form.setValue('type', ChannelType.TEXT)
+    }
+  }, [form, data.channelType])
 
   const isLoading = form.formState.isSubmitting
   const isModalOpen = isOpen && type === ModalType.CREATE_CHANNEL
@@ -56,7 +66,7 @@ const CreateChannelModal = () => {
       const url = qs.stringifyUrl({
         url: '/api/channels/create',
         query: {
-          serverId: data.server?.id,
+          serverId: params?.serverId,
         },
       })
 

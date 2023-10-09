@@ -39,7 +39,6 @@ const ServerSearch = ({ data }: Props) => {
   }, [])
 
   const handleClick = (type: 'channel' | 'member', id: string) => {
-    console.log('clicked', type, id)
     setOpen(false)
 
     if (type === 'channel') {
@@ -54,7 +53,7 @@ const ServerSearch = ({ data }: Props) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className='group flex w-full items-center gap-x-2 rounded-md bg-zinc-700/10 p-2 transition hover:bg-zinc-700/20 dark:bg-zinc-700 dark:hover:bg-zinc-700/50'
+        className='group flex w-full items-center gap-x-2 rounded-md p-2 transition hover:bg-zinc-700/20 dark:hover:bg-zinc-700/50'
       >
         <Search className='h-4 w-4 text-zinc-500 dark:text-zinc-400' />
         <p className='text-sm font-semibold text-zinc-500 transition group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300'>
