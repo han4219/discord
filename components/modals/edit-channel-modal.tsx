@@ -70,7 +70,7 @@ const EditChannelModal = () => {
 
       await axios.patch(url, values)
       form.reset()
-      router.push(`/servers/${data.server?.id}`)
+      router.refresh()
       onClose()
     } catch (error) {
       console.log(error, 'create channel failed.')
