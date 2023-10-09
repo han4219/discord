@@ -27,9 +27,16 @@ const ServerChannel = ({ server, channel, role }: Props) => {
 
   const Icon = iconMap[channel.type]
 
+  const onAction = (e: React.MouseEvent, type: ModalType) => {
+    e.stopPropagation()
+    onOpen(type, { server, channel })
+  }
+
   return (
     <button
-      onClick={() => {}}
+      onClick={() =>
+        router.push(`/servers/${server.id}/channels/${channel.id}`)
+      }
       className={cn(
         'group mb-1 flex w-full items-center gap-x-2 rounded-md p-2 text-zinc-500 transition hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50',
         params?.channelId === channel.id && 'bg-zinc-700/20 dark:bg-zinc-700'
@@ -51,9 +58,7 @@ const ServerChannel = ({ server, channel, role }: Props) => {
             label='Edit'
             children={
               <Edit
-                onClick={() =>
-                  onOpen(ModalType.EDIT_CHANNEL, { channel, server })
-                }
+                onClick={(e) => onAction(e, ModalType.EDIT_CHANNEL)}
                 className={cn(
                   'hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300',
                   params.channelId === channel.id && 'block'
@@ -65,9 +70,7 @@ const ServerChannel = ({ server, channel, role }: Props) => {
             label='Delete'
             children={
               <Trash
-                onClick={() =>
-                  onOpen(ModalType.DELETE_CHANNEL, { channel, server })
-                }
+                onClick={(e) => onAction(e, ModalType.DELETE_CHANNEL)}
                 className={cn(
                   'hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300',
                   params.channelId === channel.id && 'block'
