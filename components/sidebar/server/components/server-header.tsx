@@ -45,12 +45,21 @@ const ServerHeader = ({ server, role }: Props) => {
     >
       <DropdownMenuTrigger className='focus:outline-none' asChild>
         <button className='text-md flex h-12 w-full items-center border-b-2 border-neutral-200 px-3 font-semibold transition hover:bg-zinc-700/10 dark:border-neutral-800 dark:hover:bg-zinc-700/50 '>
+          <div className='mr-2 md:hidden'>
+            {isOpenDropdown ? (
+              <ChevronUp className='h-5 w-5' />
+            ) : (
+              <ChevronDown className='h-5 w-5' />
+            )}
+          </div>
           <p className='line-clamp-1 max-w-[90%] text-left'>{server.name}</p>
-          {isOpenDropdown ? (
-            <ChevronUp className='ml-auto h-5 w-5' />
-          ) : (
-            <ChevronDown className='ml-auto h-5 w-5' />
-          )}
+          <div className='hidden md:ml-auto md:block'>
+            {isOpenDropdown ? (
+              <ChevronUp className='ml-auto h-5 w-5' />
+            ) : (
+              <ChevronDown className='ml-auto h-5 w-5' />
+            )}
+          </div>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56 space-y-[2px] text-xs font-medium text-black dark:text-neutral-400'>
