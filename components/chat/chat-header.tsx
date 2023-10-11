@@ -1,8 +1,10 @@
 import React from 'react'
 
-import MobileToggle from '@/components/mobile-toggle'
 import { Hash } from 'lucide-react'
-import UserAvatar from '../user-avatar'
+
+import UserAvatar from '@/components/user-avatar'
+import MobileToggle from '@/components/mobile-toggle'
+import { SocketIndicator } from '@/components/socket-indicator'
 
 interface Props {
   serverId: string
@@ -22,9 +24,8 @@ const ChatHeader = ({ serverId, name, type, imageUrl }: Props) => {
         <UserAvatar src={imageUrl} className='mr-2 h-8 w-8 md:h-10 md:w-10' />
       )}
       <p className='text-md font-semibold text-black dark:text-white'>{name}</p>
-      <div className='ml-auto flex items-center'>
-        {type === 'conversation' && 'Chat Video'}
-        Socket indocator
+      <div className='ml-auto flex select-none items-center'>
+        {type === 'conversation' && <SocketIndicator />}
       </div>
     </div>
   )
