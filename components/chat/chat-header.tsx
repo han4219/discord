@@ -25,7 +25,7 @@ const ChatHeader = ({ serverId, name, type, imageUrl }: Props) => {
       )}
       <p className='text-md font-semibold text-black dark:text-white'>{name}</p>
       <div className='ml-auto flex select-none items-center'>
-        {type === 'conversation' && <SocketIndicator />}
+        <SocketIndicator />
       </div>
     </div>
   )
