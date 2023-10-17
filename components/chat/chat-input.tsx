@@ -4,15 +4,16 @@ import * as z from 'zod'
 import axios from 'axios'
 import qs from 'query-string'
 import React, { useMemo } from 'react'
-import { Plus, Smile } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { chatInputSchema } from '@/lib/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
 
 import { Input } from '@/components/ui/input'
+import EmojiPicker from '@/components/emoji-picker'
+import ActionTooltip from '@/components/action-tooltip'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import ActionTooltip from '../action-tooltip'
-import { ModalType, useModal } from '@/hooks/use-modal-store'
 
 type TChatInput = z.infer<typeof chatInputSchema>
 
@@ -42,7 +43,7 @@ const ChatInput = ({ apiUrl, type, name, query }: Props) => {
         url: '/api/socket/message',
         query,
       })
-
+      form.reset()
       await axios.post(url, values)
     } catch (error) {
       console.log(error, 'failed to send message')
@@ -82,7 +83,11 @@ const ChatInput = ({ apiUrl, type, name, query }: Props) => {
                     {...field}
                   />
                   <div className='absolute right-8 top-7'>
-                    <Smile />
+                    <EmojiPicker
+                      onEmojiChange={(emoji) =>
+                        field.onChange(`${field.value}${emoji}`)
+                      }
+                    />
                   </div>
                 </div>
               </FormControl>
