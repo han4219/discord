@@ -11,12 +11,15 @@ export enum ModalType {
   DELETE_SERVER = 'DELETE_SERVER',
   EDIT_CHANNEL = 'EDIT_CHANNEL',
   DELETE_CHANNEL = 'DELETE_CHANNEL',
+  MESSAGE_FILE = 'MESSAGE_FILE',
 }
 
 interface ModalStoreData {
   server?: Server
   channel?: Channel
   channelType?: ChannelType
+  apiUrl?: string
+  query?: Record<string, any>
 }
 
 interface ModalStore {

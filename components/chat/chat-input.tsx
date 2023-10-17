@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import ActionTooltip from '../action-tooltip'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
 
 type TChatInput = z.infer<typeof chatInputSchema>
 
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const ChatInput = ({ apiUrl, type, name, query }: Props) => {
+  const { onOpen } = useModal()
   const form = useForm<TChatInput>({
     defaultValues: {
       content: '',
@@ -56,13 +59,20 @@ const ChatInput = ({ apiUrl, type, name, query }: Props) => {
             <FormItem>
               <FormControl>
                 <div className='relative flex w-full items-center rounded-md p-4'>
-                  <button
-                    type='button'
-                    onClick={() => {}}
-                    className='absolute left-8 top-7 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300'
-                  >
-                    <Plus className='text-white dark:text-[#313338]' />
-                  </button>
+                  <ActionTooltip
+                    label='Attach an file'
+                    children={
+                      <button
+                        type='button'
+                        onClick={() =>
+                          onOpen(ModalType.MESSAGE_FILE, { apiUrl, query })
+                        }
+                        className='absolute left-8 top-7 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300'
+                      >
+                        <Plus className='text-white dark:text-[#313338]' />
+                      </button>
+                    }
+                  />
                   <Input
                     disabled={isLoading}
                     placeholder={`Message ${
